@@ -8,6 +8,7 @@ import 'dart:typed_data';
 
 import 'package:ui/src/engine/browser_detection.dart';
 import 'package:ui/src/engine/embedder.dart';
+import 'package:ui/src/engine/js_interop/js_interop.dart';
 import 'package:ui/src/engine/keyboard.dart';
 import 'package:ui/src/engine/mouse_cursor.dart';
 import 'package:ui/src/engine/navigation.dart';
@@ -157,6 +158,15 @@ void _addUrlStrategyListener() {
     jsSetUrlStrategy = null;
   });
 }
+
+/// This is the JS-Interop layer of the engine.
+///
+/// Some bits of the js-interop layer need to be ready before any initialization
+/// happens (like configuring plugins). Others can be added afterwards by calling
+/// the appropriate setter on the [jsInteropLayer] instance.
+final EngineJsInteropLayer jsInteropLayer = EngineJsInteropLayer()
+    // Set here the the js-interop bits that must be ready ASAP.
+    ..jsPluginHandler = ui.webOnlySetPluginHandler; // TODO: Remove from "ui.blah"
 
 /// The shared instance of PlatformViewManager shared across the engine to handle
 /// rendering of PlatformViews into the web app.

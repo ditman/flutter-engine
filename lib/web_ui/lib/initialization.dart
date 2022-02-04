@@ -9,6 +9,8 @@ Future<void> webOnlyInitializePlatform({
 }) {
   final Future<void> initializationFuture =
       _initializePlatform(assetManager: assetManager);
+      // ignore: unnecessary_statements
+      engine.jsInteropLayer; // Ensure the JS-Interop layer is ready
   scheduleMicrotask(() {
     // Access [engine.lineLookup] to force the lazy unpacking of line break data
     // now. Removing this line won't break anything. It's just an optimization

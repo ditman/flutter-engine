@@ -53,6 +53,7 @@ T getJsProperty<T>(Object object, String name) {
 const Set<String> _safeJsProperties = <String>{
   'decoding',
   '__flutter_state',
+  '_flutter',
 };
 
 /// Sets the value of property [name] on a JavaScript [object].
