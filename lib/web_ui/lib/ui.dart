@@ -35,3 +35,12 @@ part 'semantics.dart';
 part 'text.dart';
 part 'tile_mode.dart';
 part 'window.dart';
+
+// This is never called!
+/*
+// ignore: unused_element
+void __engineJsInteropWarmup = (){
+  // ignore: unnecessary_statements
+  engine.jsInteropLayer;
+}();
+*/

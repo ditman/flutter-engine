@@ -5,6 +5,7 @@
 import 'dart:developer' as developer;
 import 'dart:html' as html;
 import 'dart:typed_data';
+import 'dart:js_util' as js_util;
 
 import 'package:ui/src/engine/browser_detection.dart';
 import 'package:ui/src/engine/embedder.dart';
@@ -46,6 +47,17 @@ const String kProfilePrerollFrame = 'preroll_frame';
 const String kProfileApplyFrame = 'apply_frame';
 
 bool _engineInitialized = false;
+
+/// This is the JS-Interop layer of the engine.
+///
+/// Some bits of the js-interop layer need to be ready before any initialization
+/// happens (like configuring plugins). Others can be added afterwards by calling
+/// the appropriate setter on the [jsInteropLayer] instance.
+final EngineJsInteropLayer jsInteropLayer = EngineJsInteropLayer()
+    // Set here the the js-interop bits that must be ready ASAP.
+    ..initEngine = ui.webOnlyInitializePlatform
+    ..jsPluginHandler = ui.webOnlySetPluginHandler;
+    // TODO(dit): Remove all from ui.fooBar
 
 final List<ui.VoidCallback> _hotRestartListeners = <ui.VoidCallback>[];
 
@@ -158,15 +170,6 @@ void _addUrlStrategyListener() {
     jsSetUrlStrategy = null;
   });
 }
-
-/// This is the JS-Interop layer of the engine.
-///
-/// Some bits of the js-interop layer need to be ready before any initialization
-/// happens (like configuring plugins). Others can be added afterwards by calling
-/// the appropriate setter on the [jsInteropLayer] instance.
-final EngineJsInteropLayer jsInteropLayer = EngineJsInteropLayer()
-    // Set here the the js-interop bits that must be ready ASAP.
-    ..jsPluginHandler = ui.webOnlySetPluginHandler; // TODO: Remove from "ui.blah"
 
 /// The shared instance of PlatformViewManager shared across the engine to handle
 /// rendering of PlatformViews into the web app.

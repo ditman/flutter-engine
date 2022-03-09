@@ -1,9 +1,8 @@
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
-@JS('_flutter.plugins')
-library engine_js_interop_plugins;
+@JS()
+library js_interop_plugins;
 
 import 'dart:typed_data';
 
@@ -18,9 +17,13 @@ typedef FrameworkMessageHandlerFn = Future<void> Function(String channel, ByteDa
 /// Typedef for the function that registers a PluginHandler in the Flutter Web Engine.
 typedef WebOnlySetPluginHandlerFn = void Function(FrameworkMessageHandlerFn);
 
-/// JS function that sets up a plugin handler in the currently running Flutter web app.
-///
-/// The JS function is setup by the Flutter engine in engine/initialization.dart,
-/// and used to be called: `ui.webOnlySetPluginHandler`
-@JS('setPluginHandler')
-external set jsPluginHandlerSetter(WebOnlySetPluginHandlerFn fn);
+@JS()
+@anonymous
+class JsInteropPlugins {
+  /// JS function that sets up a plugin handler in the currently running Flutter web app.
+  ///
+  /// The JS function is setup by the Flutter engine in engine/initialization.dart,
+  /// and used to be called: `ui.webOnlySetPluginHandler`
+  external set setPluginHandler(WebOnlySetPluginHandlerFn fn);
+  external WebOnlySetPluginHandlerFn get setPluginHandler;
+}

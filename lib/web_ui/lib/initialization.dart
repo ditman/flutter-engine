@@ -9,6 +9,7 @@ Future<void> webOnlyInitializePlatform({
 }) {
   final Future<void> initializationFuture =
       _initializePlatform(assetManager: assetManager);
+      // TODO(dit): Can this be moved out of webOnlyInitializePlatform?
       // ignore: unnecessary_statements
       engine.jsInteropLayer; // Ensure the JS-Interop layer is ready
   scheduleMicrotask(() {
