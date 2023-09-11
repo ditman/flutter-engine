@@ -45,9 +45,13 @@ class PersistedScene extends PersistedContainerSurface {
 
   @override
   void recomputeTransformAndClip() {
-    // The scene clip is the size of the entire window.
-    final ui.Size screen = window.physicalSize;
-    localClipBounds = ui.Rect.fromLTRB(0, 0, screen.width, screen.height);
+    final double dpr = window.devicePixelRatio;
+    final ui.Size physicalSize = window.physicalSize;
+    // When DPR < 1, ensure we cover the whole window.
+    final ui.Size clip = (dpr < 1)
+      ? physicalSize / dpr
+      : physicalSize;
+    localClipBounds = ui.Rect.fromLTWH(0, 0, clip.width, clip.height);
     projectedClip = null;
   }
 
