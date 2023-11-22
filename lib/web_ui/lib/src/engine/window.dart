@@ -89,10 +89,10 @@ base class EngineFlutterView implements ui.FlutterView {
   }
 
   @override
-  void render(ui.Scene scene, {ui.Size? size}) {
+  void render(ui.Scene scene, { ui.Size? size }) {
     assert(!isDisposed, 'Trying to render a disposed EngineFlutterView.');
-    // TODO(goderbauer): Resepct the provided size when "physicalConstraints" are not allways tight. See TODO on "physicalConstraints".
-    platformDispatcher.render(scene, this);
+    // TODO(goderbauer): Respect the provided size when "physicalConstraints" are not tight. See TODO on "physicalConstraints".
+    platformDispatcher.render(scene, view: this, size: size);
   }
 
   @override
@@ -117,7 +117,12 @@ base class EngineFlutterView implements ui.FlutterView {
 
   // TODO(goderbauer): Provide API to configure constraints. See also TODO in "render".
   @override
-  ViewConstraints get physicalConstraints => ViewConstraints.tight(physicalSize);
+  ViewConstraints get physicalConstraints => ViewConstraints(
+    // minHeight: 50,
+    // maxHeight: physicalSize.height,
+    minWidth: physicalSize.width,
+    maxWidth: physicalSize.width,
+  );
 
   @override
   ui.Size get physicalSize {
