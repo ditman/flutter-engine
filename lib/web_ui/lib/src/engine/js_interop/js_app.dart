@@ -63,25 +63,25 @@ extension JsViewConstraintsExtension on JsViewConstraints {
 @staticInterop
 abstract class FlutterApp {
   factory FlutterApp({
-    required AddFlutterViewFn addView,
-    required RemoveFlutterViewFn removeView,
+    required MountFlutterViewFn mount,
+    required UnmountFlutterViewFn unmount,
   }) =>
       FlutterApp._(
-        addView: addView.toJS,
-        removeView: ((JSNumber id) => removeView(id.toDartInt)).toJS,
+        mount: mount.toJS,
+        unmount: ((JSNumber id) => unmount(id.toDartInt)).toJS,
       );
   external factory FlutterApp._({
-    required JSFunction addView,
-    required JSFunction removeView,
+    required JSFunction mount,
+    required JSFunction unmount,
   });
 }
 
-/// Typedef for the function that adds a new view to the app.
+/// Typedef for the function that mounts a view to the app.
 ///
 /// Returns the ID of the newly created view.
-typedef AddFlutterViewFn = int Function(JsFlutterViewOptions);
+typedef MountFlutterViewFn = int Function(JsFlutterViewOptions);
 
-/// Typedef for the function that removes a view from the app.
+/// Typedef for the function that unmounts a view from the app.
 ///
 /// Returns the configuration used to create the view.
-typedef RemoveFlutterViewFn = JsFlutterViewOptions? Function(int);
+typedef UnmountFlutterViewFn = JsFlutterViewOptions? Function(int);

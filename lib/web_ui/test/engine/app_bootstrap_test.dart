@@ -127,10 +127,10 @@ void testMain() {
       ));
 
       expect(maybeApp, isA<FlutterApp>());
-      expect(getJsProperty<dynamic>(maybeApp, 'addView'), isA<Function>());
-      expect(getJsProperty<dynamic>(maybeApp, 'removeView'), isA<Function>());
+      expect(getJsProperty<dynamic>(maybeApp, 'mount'), isA<Function>());
+      expect(getJsProperty<dynamic>(maybeApp, 'unmount'), isA<Function>());
     });
-    test('addView/removeView respectively adds/removes view', () async {
+    test('mount/unmount respectively add/remove views', () async {
       final AppBootstrap bootstrap = AppBootstrap(
         initializeEngine: mockInit,
         runApp: mockRunApp,
@@ -152,7 +152,7 @@ void testMain() {
       ));
       final int viewId = callMethod<num>(
         maybeApp,
-        'addView',
+        'mount',
         <dynamic>[jsify(<String, Object?>{
           'hostElement': createDomElement('div'),
         })]
@@ -161,7 +161,7 @@ void testMain() {
 
       callMethod<Object>(
         maybeApp,
-        'removeView',
+        'unmount',
         <Object>[viewId]
       );
       expect(bootstrap.viewManager[viewId], isNull);

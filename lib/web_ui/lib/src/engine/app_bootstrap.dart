@@ -68,12 +68,12 @@ class AppBootstrap {
   /// Represents the App that was just started, and its JS API.
   FlutterApp _prepareFlutterApp() {
     return FlutterApp(
-      addView: (JsFlutterViewOptions options) {
-        assert(configuration.multiViewEnabled, 'Cannot addView when multiView is not enabled');
+      mount: (JsFlutterViewOptions options) {
+        assert(configuration.multiViewEnabled, 'Cannot mount a view if multiView is not enabled');
         return viewManager.createAndRegisterView(options).viewId;
       },
-      removeView: (int viewId) {
-        assert(configuration.multiViewEnabled, 'Cannot removeView when multiView is not enabled');
+      unmount: (int viewId) {
+        assert(configuration.multiViewEnabled, 'Cannot unmount if multiView is not enabled');
         return viewManager.disposeAndUnregisterView(viewId);
       }
     );
